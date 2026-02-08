@@ -64,4 +64,9 @@
 
     <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary my-2" OnClick="btnGuardar_Click" />
     <asp:Label ID="lblResultado" runat="server" Text="" CssClass="control-label"></asp:Label>
+
+    <asp:GridView ID="gvPersonas" runat="server" DataSourceID="SqlDataSource1"></asp:GridView>
+
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+
 </asp:Content>
