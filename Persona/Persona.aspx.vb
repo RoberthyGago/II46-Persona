@@ -1,6 +1,9 @@
-﻿Public Class Persona
-    Inherits System.Web.UI.Page
+﻿Imports System.Security.Cryptography
+Imports Persona.Utils
 
+Public Class Persona
+    Inherits System.Web.UI.Page
+    Private db As New PersonaDb()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
@@ -13,13 +16,34 @@
             Return
         End If
 
-        persona.Nombre = TxtNombre.Text.Trim()
-        persona.Apellidos = TxtApellidos.Text.Trim()
+        persona.Nombre = txtNombre.Text.Trim()
+        persona.Apellidos = txtApellidos.Text.Trim()
         persona.FechaNacimiento = txtFechaNac.Text.Trim()
         persona.Correo = txtCorreo.Text.Trim()
-        persona.TipoDocumento = DdlTipoDocumento.SelectedItem.Text.Trim()
+        persona.TipoDocumento = ddlTipoDocumento.SelectedItem.Value
         persona.NumeroDocumento = txtDocumento.Text.Trim()
 
         lblResultado.Text = persona.Resumen()
+        Dim resultado = db.CrearPersona(persona)
+
+
+        If resultado Then
+            SwalUtils.ShowSwal(Me, "Persona creada exitosamente")
+            gvPersonas.DataBind()
+        Else
+            SwalUtils.ShowSwalError(Me, "Error no se pudo crear")
+        End If
+    End Sub
+
+    Protected Sub gvPersonas_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
+        e.Cancel = True 'cancelamos el evento de eliminación predeterminado del GridView
+        Dim id As Integer = Convert.ToInt32(gvPersonas.DataKeys(e.RowIndex).Value) 'obtenemos el ID de la persona a eliminar  dispar el evento de eliminación personalizado  
+        Dim resultado = db.EliminarPersona(id) 'eliminamos la persona de la base de datos
+        If resultado Then
+            SwalUtils.ShowSwal(Me, "Persona eliminada exitosamente")
+            gvPersonas.DataBind()
+        Else
+            SwalUtils.ShowSwalError(Me, "Error no se pudo eliminar")
+        End If
     End Sub
 End Class
