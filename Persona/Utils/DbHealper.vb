@@ -16,7 +16,7 @@ Public Class DbHealper
         Return conn
     End Function
     'metodo para ejecutar una consulta SQL que no devuelve resultados (INSERT, UPDATE, DELETE) con parametros
-    Public Function ExecuteNonQuery(query As String, parameters As Dictionary(Of String, Object)) As Object
+    Public Function ExecuteNonQuery(query As String, parameters As Dictionary(Of String, Object), ByRef errorMessage As String) As Object
         If String.IsNullOrWhiteSpace(query) Then
             Throw New ArgumentException("La consulta no puede estar vacía.")
         End If
@@ -29,8 +29,10 @@ Public Class DbHealper
                 End If
                 Try
                     cmd.ExecuteNonQuery()
+
                     Return True
                 Catch ex As Exception
+                    errorMessage = "Error al ejecutar la consulta: " & ex.Message
                     Return False
                 End Try
 
