@@ -1,4 +1,5 @@
-﻿Imports System.Security.Cryptography
+﻿'esta clase se encarga de manejar la logica de la pagina Persona.aspx, como crear una nueva persona y eliminar una persona existente, ademas de mostrar mensajes de exito o error utilizando la clase SwalUtils para mostrar ventanas emergentes con sweet alert
+Imports System.Security.Cryptography
 Imports Persona.Utils
 
 Public Class Persona

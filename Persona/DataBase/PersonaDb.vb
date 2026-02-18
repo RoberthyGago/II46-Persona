@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿'esta clase se encarga de manejar las operaciones relacionadas con la entidad Persona en la base de datos, como crear, eliminar, actualizar y obtener personas
+Imports System.Data.SqlClient
 Imports Persona.Utils
 Public Class PersonaDb
     Private db As New DbHealper()

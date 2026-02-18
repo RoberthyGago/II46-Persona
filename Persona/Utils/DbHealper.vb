@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿'esta clase se encarga de manejar la conexion a la base de datos y ejecutar consultas SQL
+Imports System.Data.SqlClient
 
 Public Class DbHealper
     'varable para almacenar la cadena de conexion a la base de datos

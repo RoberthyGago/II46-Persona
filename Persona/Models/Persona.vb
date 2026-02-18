@@ -1,4 +1,5 @@
-﻿Namespace Models
+﻿'esta clase se encarga de manejar la logica de la pagina Persona.aspx, como crear una nueva persona y eliminar una persona existente, ademas de mostrar mensajes de exito o error utilizando la clase SwalUtils para mostrar ventanas emergentes con sweet alert
+Namespace Models
     Public Class Persona
         Private _nombre As String
         Private _apellidos As String
