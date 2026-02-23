@@ -2,8 +2,8 @@
 <%@ Page Title="Persona" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Persona.aspx.vb" Inherits="Persona.Persona" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
-
+    
+<asp:HiddenField ID="hfIDPersona" runat="server" />
     <div class="form-group">
         <asp:Label ID="lblTipoDoc" runat="server" Text="Tipo de Documento" CssClass="control-label"></asp:Label>
         <asp:DropDownList ID="ddlTipoDocumento" runat="server" CssClass="form-control">
@@ -49,7 +49,7 @@
         <asp:Label ID="lblFechaNac" runat="server" Text="Fecha Nacimiento" CssClass="control-label"></asp:Label>
         <asp:TextBox ID="txtFechaNac" runat="server" placeholder="29/12/96" CssClass="form-control" TextMode="Date"></asp:TextBox>
     </div>
-
+    
     <%--Validacion de Fecha--%>
     <asp:RequiredFieldValidator ID="rfvFechaNac" runat="server"
         ErrorMessage="Es necesario indicar la fecha de nacimiento"
@@ -59,26 +59,39 @@
         <asp:Label ID="lblCorreo" runat="server" Text="Correo" CssClass="control-label"></asp:Label>
         <asp:TextBox ID="txtCorreo" runat="server" placeholder="rcordero@edu.ac.cr" CssClass="form-control"></asp:TextBox>
     </div>
+    
     <asp:RequiredFieldValidator ID="rfvCorreo" runat="server"
         ErrorMessage="Es necesario indicar el correo"
         ControlToValidate="txtCorreo" Display="Dynamic"></asp:RequiredFieldValidator>
 
     <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary my-2" OnClick="btnGuardar_Click" />
     <asp:Label ID="lblResultado" runat="server" Text="" CssClass="control-label"></asp:Label>
+      <%--creo eventos nuevos--%>
+    <asp:GridView ID="gvPersonas" CssClass="table  table-striped table-hover"
+        runat="server" DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="IDPersona"
+       
 
-    <asp:GridView ID="gvPersonas" runat="server" DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="IDPersona" OnRowDeleting="gvPersonas_RowDeleting">
-        <Columns>
-            <asp:BoundField DataField="IDPersona" HeaderText="IDPersona" InsertVisible="False" ReadOnly="True" SortExpression="IDPersona" />
-            <asp:BoundField DataField="TipoDocumento" HeaderText="TipoDocumento" SortExpression="TipoDocumento" />
-            <asp:BoundField DataField="Documento" HeaderText="Documento" SortExpression="Documento" />
-            <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
-            <asp:BoundField DataField="Apellidos" HeaderText="Apellidos" SortExpression="Apellidos" />
-            <asp:BoundField DataField="FechaNac" HeaderText="FechaNac" SortExpression="FechaNac" />
-            <asp:BoundField DataField="Correo" HeaderText="Correo" SortExpression="Correo" />
-            <asp:CommandField ShowDeleteButton="true" />
-        </Columns>
+        OnRowEditing="gvPersonas_RowEditing"
+        OnSelectedIndexChanged="gvPersonas_SelectedIndexChanged"
+        OnRowDeleting="gvPersonas_RowDeleting">
+        <Columns>            
+<asp:CommandField ShowSelectButton="True" ControlStyle-CssClass="btn btn-primary" SelectText="<i class='bi bi-pencil'>" />
+
+<asp:BoundField DataField="IDPersona" HeaderText="IDPersona" InsertVisible="False" ReadOnly="True" SortExpression="IDPersona" />
+<asp:BoundField ControlStyle-CssClass="d-none" DataField="TipoDocumento" HeaderText="TipoDocumento" SortExpression="TipoDocumento" />
+<asp:BoundField DataField="Documento" HeaderText="Documento" SortExpression="Documento" />
+<asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
+<asp:BoundField DataField="Apellidos" HeaderText="Apellidos" SortExpression="Apellidos" />
+<asp:BoundField DataField="FechaNac" HeaderText="FechaNac" SortExpression="FechaNac" />
+<asp:BoundField DataField="Correo" HeaderText="Correo" SortExpression="Correo" />
+<asp:CommandField ShowDeleteButton="True" ControlStyle-CssClass="btn btn-danger" DeleteText="<i class='bi bi-trash'>" />
+
+
+
+</Columns>
     </asp:GridView>
-
+    <%--<asp:CommandField ShowEditButton="True" ControlStyle-CssClass="btn btn-primary" EditText="<i class='bi bi-pencil'>" />--%>
+    
     <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:II-46ConnectionString %>" ProviderName="<%$ ConnectionStrings:II-46ConnectionString.ProviderName %>" SelectCommand="SELECT * FROM [Personas]"></asp:SqlDataSource>
 
     <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>

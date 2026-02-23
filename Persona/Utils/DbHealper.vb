@@ -40,5 +40,29 @@ Public Class DbHealper
             End Using
         End Using
     End Function
+
+    Public Function ExecuteReader(query As String, parameters As Dictionary(Of String, Object), ByRef errorMessage As String) As SqlDataReader
+        If String.IsNullOrWhiteSpace(query) Then
+            Throw New ArgumentException("La consulta no puede estar vacía.")
+        End If
+
+        Dim conn As SqlConnection = GetConnection()
+        Dim cmd As New SqlCommand(query, conn)
+
+        If parameters IsNot Nothing Then
+            For Each p In parameters
+                cmd.Parameters.AddWithValue(p.Key, p.Value)
+            Next
+        End If
+
+        Try
+            ' CommandBehavior.CloseConnection asegura que la conexión se cierre al cerrar el reader
+            Return cmd.ExecuteReader(CommandBehavior.CloseConnection)
+        Catch ex As Exception
+            errorMessage = "Error al ejecutar la consulta: " & ex.Message
+            conn.Close()
+            Return Nothing
+        End Try
+    End Function
 End Class
 

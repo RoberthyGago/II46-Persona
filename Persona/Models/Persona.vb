@@ -1,12 +1,15 @@
 ﻿'esta clase se encarga de manejar la logica de la pagina Persona.aspx, como crear una nueva persona y eliminar una persona existente, ademas de mostrar mensajes de exito o error utilizando la clase SwalUtils para mostrar ventanas emergentes con sweet alert
 Namespace Models
     Public Class Persona
+        Private _IDPersona As Integer
         Private _nombre As String
         Private _apellidos As String
         Private _tipoDocumento As String
         Private _numeroDocumento As String
         Private _fechaNacimiento As Date
         Private _correo As String
+
+
 
         Public Sub New()
             Me.Nombre = "SIN NOMBRE"
@@ -25,6 +28,15 @@ Namespace Models
             Me.FechaNacimiento = fechaNacimiento
             Me.Correo = correo
         End Sub
+
+        Public Property IDPersona As Integer
+            Get
+                Return _IDPersona
+            End Get
+            Set(value As Integer)
+                _IDPersona = value
+            End Set
+        End Property
 
         Public Property Nombre As String
             Get
@@ -81,7 +93,7 @@ Namespace Models
         End Property
 
         Public Function Resumen() As String
-            Return $"Nombre: {Nombre} {Apellidos} - {Correo}"
+            Return $"Nombre: {Nombre} {Apellidos} - Correo {Correo}"
         End Function
     End Class
 
