@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class Persona
 
     '''<summary>
-    '''Control hfIDPersona.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents hfIDPersona As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''Control lblTipoDoc.
     '''</summary>
     '''<remarks>
@@ -185,6 +176,15 @@ Partial Public Class Persona
     Protected WithEvents rfvCorreo As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
+    '''Control hfIdPersona.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfIdPersona As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Control btnGuardar.
     '''</summary>
     '''<remarks>
@@ -194,13 +194,13 @@ Partial Public Class Persona
     Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Control lblResultado.
+    '''Control btnActualizar.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lblResultado As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents btnActualizar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Control gvPersonas.
@@ -210,15 +210,6 @@ Partial Public Class Persona
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents gvPersonas As Global.System.Web.UI.WebControls.GridView
-
-    '''<summary>
-    '''Control SqlDataSource2.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents SqlDataSource2 As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
     '''Control SqlDataSource1.

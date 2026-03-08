@@ -11,20 +11,20 @@ Public Class PersonaDb
             VALUES (@TipoDocumento, @Documento, @Nombre, @Apellidos, @FechaNac, @Correo)"
 
             Dim parameters As New Dictionary(Of String, Object) From {
-            {"@Nombre", pPersona.Nombre},
-            {"@FechaNac", pPersona.FechaNacimiento},
-            {"@Correo", pPersona.Correo},
-            {"@Apellidos", pPersona.Apellidos},
-            {"@Documento", pPersona.NumeroDocumento},
-            {"@TipoDocumento", pPersona.TipoDocumento}
-          }
+              {"@Nombre", pPersona.Nombre},
+              {"@FechaNac", pPersona.FechaNacimiento},
+              {"@Correo", pPersona.Correo},
+              {"@Apellidos", pPersona.Apellidos},
+              {"@Documento", pPersona.NumeroDocumento},
+              {"@TipoDocumento", pPersona.TipoDocumento}
+            }
             Return db.ExecuteNonQuery(query, parameters, errorMessage)
         End Using
         Return True
     End Function
 
     'metodo para eliminar una persona
-    Public Function EliminarPersona(ByVal id As Integer, ByRef errorMessage As String) As Boolean
+    Public Function EliminarPersona(id As Integer, ByRef errorMessage As String) As Boolean
         Dim query As String = "DELETE FROM Personas WHERE IDPersona = @Id"
         Dim parameters As New Dictionary(Of String, Object) From {
             {"@Id", id}
@@ -32,40 +32,30 @@ Public Class PersonaDb
         Return db.ExecuteNonQuery(query, parameters, errorMessage)
     End Function
 
-    Friend Function ConsultarPersona(id As String, modelErrorMessage As ModelErrorMessage) As Models.Persona
-        Dim persona As New Models.Persona()
-
-        Try
-            Dim query As String = "SELECT IDPersona, Nombre, Apellidos, TipoDocumento, Documento, FechaNac, Correo 
-                               FROM Personas 
-                               WHERE IDPersona = @Id"
-
-            Dim parameters As New Dictionary(Of String, Object) From {
+    Public Function ConsultarPersona(id As String, ByRef errorMessage As String) As Models.Persona
+        Dim query As String = "SELECT * FROM Personas WHERE IDPersona = @Id"
+        Dim parameters As New Dictionary(Of String, Object) From {
             {"@Id", id}
         }
-
-            Using reader As SqlDataReader = db.ExecuteReader(query, parameters, modelErrorMessage.ErrorMessage)
-                If reader.Read() Then
-                    persona.IDPersona = Convert.ToInt32(reader("IDPersona"))
-                    persona.Nombre = reader("Nombre").ToString()
-                    persona.Apellidos = reader("Apellidos").ToString()
-                    persona.TipoDocumento = reader("TipoDocumento").ToString()
-                    persona.NumeroDocumento = reader("Documento").ToString()
-                    persona.FechaNacimiento = Convert.ToDateTime(reader("FechaNac"))
-                    persona.Correo = reader("Correo").ToString()
-                End If
-            End Using
-
-        Catch ex As Exception
-            modelErrorMessage.ErrorMessage = ex.Message
-        End Try
-
-        Return persona
+        Dim dt As DataTable = db.ExecuteQuery(query, parameters, errorMessage)
+        If dt IsNot Nothing AndAlso dt.Rows.Count > 0 Then
+            Dim row As DataRow = dt.Rows(0)
+            Dim persona As New Models.Persona() With {
+                .Nombre = row("Nombre").ToString(),
+                .Apellidos = row("Apellidos").ToString(),
+                .FechaNacimiento = Convert.ToDateTime(row("FechaNac")),
+                .Correo = row("Correo").ToString(),
+                .NumeroDocumento = row("Documento").ToString(),
+                .TipoDocumento = row("TipoDocumento").ToString()
+            }
+            Return persona
+        End If
+        Return Nothing
     End Function
 
 
     'metodo para actualizar una persona
-    Public Function ActualizarPersona(ByVal pPersona As Models.Persona, ByRef errorMessage As String) As Boolean
+    Public Function ActualizarPersona(ByVal persona As Models.Persona, ByRef errorMessage As String) As Boolean
         Dim query As String = "UPDATE Personas 
                            SET TipoDocumento = @TipoDocumento,
                                Documento = @Documento,
@@ -76,13 +66,13 @@ Public Class PersonaDb
                            WHERE IDPersona = @Id"
 
         Dim parameters As New Dictionary(Of String, Object) From {
-            {"@TipoDocumento", pPersona.TipoDocumento},
-            {"@Documento", pPersona.NumeroDocumento},
-            {"@Nombre", pPersona.Nombre},
-            {"@Apellidos", pPersona.Apellidos},
-            {"@FechaNac", pPersona.FechaNacimiento},
-            {"@Correo", pPersona.Correo},
-            {"@Id", pPersona.IDPERSONA}
+            {"@TipoDocumento", persona.TipoDocumento},
+            {"@Documento", persona.NumeroDocumento},
+            {"@Nombre", persona.Nombre},
+            {"@Apellidos", persona.Apellidos},
+            {"@FechaNac", persona.FechaNacimiento},
+            {"@Correo", persona.Correo},
+            {"@Id", persona.IDPersona}
         }
 
         Return db.ExecuteNonQuery(query, parameters, errorMessage)
